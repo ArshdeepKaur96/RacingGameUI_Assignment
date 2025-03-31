@@ -1,0 +1,42 @@
+// Class: WBP_RaceHUD
+// Parent Class: UserWidget
+
+// Widget Components:
+TextBlock RaceTimeText;
+TextBlock LastLapText; 
+TextBlock LapCounterText;
+TextBlock SpeedText;
+
+// Event Construct
+void Construct()
+{
+    RaceTimeText.SetText(FText::FromString("00:00:00"));
+    LastLapText.SetText(FText::FromString("Last: --:--:--"));
+    LapCounterText.SetText(FText::FromString("LAP 0/3"));
+    SpeedText.SetText(FText::FromString("0 km/h"));
+}
+
+// Function: UpdateRaceUI
+void UpdateRaceUI(float CurrentTime, float LastLapTime, int32 CurrentLap, int32 TotalLaps, float Speed)
+{
+    RaceTimeText.SetText(FText::FromString(FormatTime(CurrentTime)));
+    
+    FString LastLapString = LastLapTime > 0 ? 
+        "Last: " + FormatTime(LastLapTime) : "Last: --:--:--";
+    LastLapText.SetText(FText::FromString(LastLapString));
+    
+    LapCounterText.SetText(FText::FromString(
+        FString::Printf(TEXT("LAP %d/%d"), CurrentLap, TotalLaps)));
+    
+    SpeedText.SetText(FText::FromString(
+        FString::Printf(TEXT("%.0f km/h"), Speed * 3.6)));
+}
+
+// Function: FormatTime
+FString FormatTime(float Seconds)
+{
+    int32 Minutes = FMath::FloorToInt(Seconds / 60.f);
+    int32 Secs = FMath::FloorToInt(FMath::Fmod(Seconds, 60.f));
+    int32 Mils = FMath::FloorToInt(FMath::Fmod(Seconds, 1.f) * 100.f);
+    return FString::Printf(TEXT("%02d:%02d:%02d"), Minutes, Secs, Mils);
+}
