@@ -1,0 +1,58 @@
+// Class: BP_RaceManager
+// Parent Class: Actor
+
+// Variables:
+float CurrentRaceTime;
+float LastLapTime = -1.0f; 
+int32 CurrentLap = 0;
+int32 TotalLaps = 3;
+bool IsRaceActive = true;
+WBP_RaceHUD RaceHUDRef;
+
+// Event BeginPlay
+void BeginPlay()
+{
+    RaceHUDRef = CreateWidget<WBP_RaceHUD>(GetWorld());
+    RaceHUDRef->AddToViewport();
+}
+
+// Event Tick
+void Tick(float DeltaSeconds)
+{
+    if(IsRaceActive)
+    {
+        CurrentRaceTime += DeltaSeconds;
+        
+        APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+        float CurrentSpeed = PlayerPawn->GetVelocity().Size();
+        
+        RaceHUDRef->UpdateRaceUI(
+            CurrentRaceTime, 
+            LastLapTime,
+            CurrentLap,
+            TotalLaps,
+            CurrentSpeed
+        );
+    }
+}
+
+// Function: CompleteLap
+void CompleteLap()
+{
+    if(CurrentLap == 0)
+    {
+        LastLapTime = CurrentRaceTime;
+    }
+    else
+    {
+        LastLapTime = CurrentRaceTime - (LastLapTime * CurrentLap);
+    }
+    
+    CurrentLap++;
+    
+    if(CurrentLap > TotalLaps)
+    {
+        IsRaceActive = false;
+        OnRaceFinished();
+    }
+}
