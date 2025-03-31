@@ -1,0 +1,32 @@
+# Unreal Engine generated files
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/
+
+# Visual Studio files
+*.VC.db
+*.VC.opendb
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+
+# Project files
+*.sdf
+*.opensdf
+*.opendb
+*.db
+
+# Binary files
+*.exe
+*.dll
+*.ilk
+*.obj
+*.pdb
+*.lib
+*.app
+*.dylib
+*.so
+*.a
