@@ -1,0 +1,26 @@
+// Class: BP_PlayerCar  
+// Parent Class: Pawn
+
+// Components:
+StaticMeshComponent VehicleMesh;
+BoxComponent LapTrigger;
+
+// Variables:
+BP_RaceManager RaceManagerRef;
+
+// Event BeginPlay
+void BeginPlay()
+{
+    LapTrigger.OnComponentBeginOverlap.AddDynamic(this, &BP_PlayerCar::OnLapTriggerOverlap);
+    RaceManagerRef = Cast<BP_RaceManager>(
+        UGameplayStatics::GetActorOfClass(GetWorld(), BP_RaceManager::StaticClass()));
+}
+
+// Function: OnLapTriggerOverlap
+void OnLapTriggerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor)
+{
+    if(OtherActor == this) // Check if player overlapped
+    {
+        RaceManagerRef->CompleteLap();
+    }
+}
