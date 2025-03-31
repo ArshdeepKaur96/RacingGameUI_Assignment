@@ -1,1 +1,11 @@
-
+Content/
+└── RacingUI/
+    ├── Blueprints/
+    │   ├── BP_PlayerCar.uasset
+    │   └── BP_RaceManager.uasset
+    │
+    ├── UI/
+    │   └── WBP_RaceHUD.uasset
+    │
+    └── Data/
+        └── DT_RaceSettings.uasset
