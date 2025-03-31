@@ -1,0 +1,5 @@
+Row Name | TotalLaps | RaceTimeout
+---------|-----------|------------
+Default  | 3         | 300.0
+Short    | 1         | 120.0  
+Long     | 5         | 600.0
